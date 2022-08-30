@@ -1,4 +1,5 @@
 .DS_Store
+DEMO
 node_modules
 /dist
 
