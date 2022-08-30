@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TopBar @searchInput="getSearchInput" />
-    <MainSection :linkedMoviesList="moviesList" />
+    <MainSection :linkedMoviesList="moviesList" :linkedSeriesList="seriesList" />
   </div>
 </template>
 
@@ -20,7 +20,8 @@ export default {
   data() {
     return {
       linkedSearchInput: '',
-      moviesList: []
+      moviesList: [],
+      seriesList: []
     }
   },
   methods: {
@@ -28,8 +29,10 @@ export default {
       this.linkedSearchInput = givenSearchInput;
       if (!this.linkedSearchInput == '') {
         this.moviesListRequest();
+        this.seriesListRequest();
       } else {
         this.moviesList = [];
+        this.seriesList = [];
       }
     },
     moviesListRequest() {
@@ -37,8 +40,16 @@ export default {
       .then(response => {
         //console.log(response);
         this.moviesList = response.data.results;
-
-        console.log(this.moviesList);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    },
+    seriesListRequest() {
+      axios.get(`https://api.themoviedb.org/3/search/tv?api_key=a2e57431dfc8a0bdbcd28a2ec61e3e89&query=${this.linkedSearchInput}&language=it-IT`)
+      .then(response => {
+        //console.log(response);
+        this.seriesList = response.data.results;
       })
       .catch(error => {
         console.log(error);
