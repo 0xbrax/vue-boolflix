@@ -65,32 +65,26 @@ export default {
 
     .card-container {
         height: 100%;
-
+        width: 100%;
+        background-color: transparent;
         perspective: 1000px;
     }
 
     .card-inner {
         height: 100%;
-        background-color: aqua;
+        width: 100%;
         outline: 3px solid rgba(255, 255, 255, 0.8);
         outline-offset: 3px;
-
-        
 
         position: relative;
         transition: transform 0.8s;
         transform-style: preserve-3d;
-
-        &:hover {
-            transform: rotateY(180deg);
-        }
     }
 
     .card-front {
-        height: 100%;
         overflow: hidden;
+        background-color: aqua;
     }
-
     .img-main {
         width: 100%;
         height: 100%;
@@ -98,8 +92,9 @@ export default {
     }
 
     .card-back {
-        height: 100%;
+        transform: rotateY(180deg);
         overflow-y: auto;
+        background-color: aqua;
     }
 
     .card-front, .card-back {
@@ -108,5 +103,9 @@ export default {
         height: 100%;
         -webkit-backface-visibility: hidden; /* Safari */
         backface-visibility: hidden;
+    }
+
+    .card-container:hover .card-inner {
+        transform: rotateY(180deg);
     }
 </style>

@@ -2,7 +2,7 @@
     <main>
         <section class="container" v-if="linkedMoviesList.length !== 0">
             <h2>Film</h2>
-            <div class="flex wrap just-sp-bw">
+            <div class="flex wrap">
                 <div class="card" v-for="(movie, movieIndex) in linkedMoviesList" :key="movieIndex">
 
                     <SingleCard :linkedCard="movie" />
@@ -13,7 +13,7 @@
 
         <section class="container" v-if="linkedSeriesList.length !== 0">
             <h2>Serie TV</h2>
-            <div class="flex wrap just-sp-bw">
+            <div class="flex wrap">
                 <div class="card" v-for="(serie, serieIndex) in linkedSeriesList" :key="serieIndex">
 
                     <SingleCard :linkedCard="serie" />
