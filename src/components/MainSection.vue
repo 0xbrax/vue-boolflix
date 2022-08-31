@@ -5,7 +5,7 @@
             <div class="flex wrap">
                 <div class="card" v-for="(movie, movieIndex) in linkedMoviesList" :key="movieIndex">
 
-                    <SingleMovieCard :linkedCard="movie" />
+                    <SingleMovieCard :linkedCard="movie" :linkedMoviesCastList="linkedMoviesCastList[movieIndex]" />
 
                 </div>
             </div>
@@ -16,7 +16,7 @@
             <div class="flex wrap">
                 <div class="card" v-for="(serie, serieIndex) in linkedSeriesList" :key="serieIndex">
 
-                    <SingleSerieCard :linkedCard="serie" />
+                    <SingleSerieCard :linkedCard="serie" :linkedSeriesCastList="linkedSeriesCastList[serieIndex]" />
 
                 </div>
             </div>
@@ -50,7 +50,9 @@ export default {
     props: {
         linkedSearchInput: String,
         linkedMoviesList: Array,
-        linkedSeriesList: Array
+        linkedMoviesCastList: Array,
+        linkedSeriesList: Array,
+        linkedSeriesCastList: Array
     }
 }
 </script>

@@ -19,6 +19,10 @@
                     <div v-else><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
                 </div>
 
+                <div v-for="(seriesCast, seriesCastListIndex) in linkedSeriesCastList" :key="seriesCastListIndex">
+                    {{seriesCast.name}}
+                </div>
+
                 <div class="card-overview">{{linkedCard.overview}}</div>
             </div>
         </div>
@@ -29,7 +33,8 @@
 export default {
     name: 'SingleSerieCard',
     props: {
-        linkedCard: Object
+        linkedCard: Object,
+        linkedSeriesCastList: Array
     },
     data() {
         return {

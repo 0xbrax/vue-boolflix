@@ -7,7 +7,6 @@
 
             <div class="card-back flex col align-ctr">
                 <h3>{{linkedCard.title}}</h3>
-                <div>{{linkedCard.id}}</div>
                 <div>{{linkedCard.original_title}}</div>
                 <img class="lang-flag" :src="langFlagEndpoint + checkLangFlag(linkedCard.original_language)" :alt="linkedCard.original_language">
 
@@ -20,6 +19,10 @@
                     <div v-else><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
                 </div>
 
+                <div v-for="(moviesCast, moviesCastListIndex) in linkedMoviesCastList" :key="moviesCastListIndex">
+                    {{moviesCast.name}}
+                </div>
+
                 <div class="card-overview">{{linkedCard.overview}}</div>
             </div>
         </div>
@@ -30,7 +33,8 @@
 export default {
     name: 'SingleMovieCard',
     props: {
-        linkedCard: Object
+        linkedCard: Object,
+        linkedMoviesCastList: Array
     },
     data() {
         return {
