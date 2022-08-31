@@ -4,12 +4,12 @@
             <h2>Film</h2>
             <div class="flex wrap just-ctr">
                 <div v-for="(movie, movieIndex) in linkedMoviesList" :key="movieIndex">
-                    <img :src="getImagePath(movie.backdrop_path)" alt="">
+                    <img :src="imagePath + movie.backdrop_path" :alt="movie.title">
                     <h3>{{movie.title}}</h3>
                     <div>{{movie.original_title}}</div>
-                    <div>{{movie.original_language}}</div>
-                    <div>{{getLanguageFlag(movie.original_language)}}</div>
-                    <div>{{movie.vote_average}}</div>
+                    <img class="lang-flag" :src="langFlagEndpoint + movie.original_language" :alt="movie.original_language">
+                    <div>{{getRank(movie.vote_average)}}</div>
+                    <div><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
                 </div>
             </div>
         </section>
@@ -18,11 +18,11 @@
             <h2>Serie TV</h2>
             <div class="flex wrap just-ctr">
                 <div v-for="(serie, serieIndex) in linkedSeriesList" :key="serieIndex">
-                    <img :src="getImagePath(serie.backdrop_path)" alt="">
+                    <img :src="imagePath + serie.backdrop_path" :alt="serie.title">
                     <h3>{{serie.name}}</h3>
                     <div>{{serie.original_name}}</div>
-                    <div>{{serie.original_language}}</div>
-                    <div>{{serie.vote_average}}</div>
+                    <img class="lang-flag" :src="langFlagEndpoint + serie.origin_country" :alt="serie.origin_countrye">
+                    <div>{{getRank(serie.vote_average)}}</div>
                 </div>
             </div>
         </section>
@@ -38,51 +38,36 @@ export default {
     },
     data() {
         return {
-            languageList: [
-                {
-                    lang: 'us',
-                    emojiP1: '127482',
-                    emojiP2: '127480'
-                },
-                {
-                    lang: 'es',
-                    emojiP1: '127466',
-                    emojiP2: '127480'
-                },
-                {
-                    lang: 'it',
-                    emojiP1: '127470',
-                    emojiP2: '127481'
-                }
-            ]
+            imagePath: 'https://image.tmdb.org/t/p/w342',
+            langFlagEndpoint: 'https://countryflagsapi.com/svg/'
         }
-    },
+    }, 
     methods: {
-        getLanguageFlag(language) {
-            console.log((String.fromCodePoint(this.languageList[2].emojiP1) + String.fromCodePoint(this.languageList[2].emojiP2)))
+        getRank(vote) {
+            console.log('voto originale: ' + vote)
+            let ranked = Math.ceil(vote / 2);
+            console.log('voto nuovo: ' + ranked)
 
-            let moviesFlag = 'flag test';
-            // !!! TO FIX
-
-            for (let i = 0; i < this.languageList; i++) {
-                console.log('hello world')
-
-                if (language == this.languageList[i].lang) {
-                    moviesFlag = (String.fromCodePoint(this.languageList[i].emojiP1) + String.fromCodePoint(this.languageList[i].emojiP2))
-                }
-                return moviesFlag
+            if (ranked == 0) {
+                return '<i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>'
+            } else if (ranked == 1) {
+                return '<i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>'
+            } else if (ranked == 2) {
+                return '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>'
+            } else if (ranked == 3) {
+                return '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>'
+            } else if (ranked == 4) {
+                return '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>'
+            } else if (ranked == 5) {
+                return '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>'
             }
-
-            return moviesFlag
-        },
-        getImagePath(path) {
-            console.log(path)
-            return require('https://image.tmdb.org/t/p/w342' + path)
         }
     }
 }
 </script>
 
-<style lang="scss">
-
+<style scoped lang="scss">
+    .lang-flag {
+        height: 20px;
+    }
 </style>
