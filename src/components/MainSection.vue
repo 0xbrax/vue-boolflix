@@ -8,8 +8,14 @@
                     <h3>{{movie.title}}</h3>
                     <div>{{movie.original_title}}</div>
                     <img class="lang-flag" :src="langFlagEndpoint + movie.original_language" :alt="movie.original_language">
-                    <div>{{getRank(movie.vote_average)}}</div>
-                    <div><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                    <div>
+                        <div v-if="Math.ceil(movie.vote_average / 2) == 1"><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                        <div v-else-if="Math.ceil(movie.vote_average / 2) == 2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                        <div v-else-if="Math.ceil(movie.vote_average / 2) == 3"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                        <div v-else-if="Math.ceil(movie.vote_average / 2) == 4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+                        <div v-else-if="Math.ceil(movie.vote_average / 2) == 5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <div v-else><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -22,7 +28,14 @@
                     <h3>{{serie.name}}</h3>
                     <div>{{serie.original_name}}</div>
                     <img class="lang-flag" :src="langFlagEndpoint + serie.origin_country" :alt="serie.origin_countrye">
-                    <div>{{getRank(serie.vote_average)}}</div>
+                    <div>
+                        <div v-if="Math.ceil(serie.vote_average / 2) == 1"><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                        <div v-else-if="Math.ceil(serie.vote_average / 2) == 2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                        <div v-else-if="Math.ceil(serie.vote_average / 2) == 3"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                        <div v-else-if="Math.ceil(serie.vote_average / 2) == 4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+                        <div v-else-if="Math.ceil(serie.vote_average / 2) == 5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <div v-else><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -44,23 +57,10 @@ export default {
     }, 
     methods: {
         getRank(vote) {
+            // TEST
             console.log('voto originale: ' + vote)
             let ranked = Math.ceil(vote / 2);
             console.log('voto nuovo: ' + ranked)
-
-            if (ranked == 0) {
-                return '<i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>'
-            } else if (ranked == 1) {
-                return '<i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>'
-            } else if (ranked == 2) {
-                return '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>'
-            } else if (ranked == 3) {
-                return '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>'
-            } else if (ranked == 4) {
-                return '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>'
-            } else if (ranked == 5) {
-                return '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>'
-            }
         }
     }
 }
