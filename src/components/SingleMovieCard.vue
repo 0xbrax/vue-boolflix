@@ -2,11 +2,12 @@
     <div class="card-container">
         <div class="card-inner">
             <div class="card-front">
-                <img class="img-main" :src="imagePath + linkedCard.backdrop_path" :alt="linkedCard.title">
+                <img class="img-main" :src="imagePath + linkedCard.poster_path" :alt="linkedCard.title">
             </div>
 
-            <div class="card-back">
+            <div class="card-back flex col align-ctr">
                 <h3>{{linkedCard.title}}</h3>
+                <div>{{linkedCard.id}}</div>
                 <div>{{linkedCard.original_title}}</div>
                 <img class="lang-flag" :src="langFlagEndpoint + checkLangFlag(linkedCard.original_language)" :alt="linkedCard.original_language">
 
@@ -18,6 +19,8 @@
                     <div v-else-if="getRank(linkedCard.vote_average) == 5"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                     <div v-else><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></div>
                 </div>
+
+                <div class="card-overview">{{linkedCard.overview}}</div>
             </div>
         </div>
     </div>
@@ -25,20 +28,19 @@
 
 <script>
 export default {
-    name: 'SingleCard',
+    name: 'SingleMovieCard',
     props: {
         linkedCard: Object
     },
     data() {
         return {
-            imagePath: 'https://image.tmdb.org/t/p/h632',
+            imagePath: 'https://image.tmdb.org/t/p/w342',
             langFlagEndpoint: 'https://countryflagsapi.com/svg/'
         }
     }, 
     methods: {
         checkLangFlag(lang) {
             let checkLang = lang.substring(0, 2);
-
             if (checkLang == 'en') {
                 return checkLang = 'gb';
             } else if (checkLang == 'zh') {
@@ -59,53 +61,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .lang-flag {
-        height: 20px;
-    }
 
-    .card-container {
-        height: 100%;
-        width: 100%;
-        background-color: transparent;
-        perspective: 1000px;
-    }
-
-    .card-inner {
-        height: 100%;
-        width: 100%;
-        outline: 3px solid rgba(255, 255, 255, 0.8);
-        outline-offset: 3px;
-
-        position: relative;
-        transition: transform 0.8s;
-        transform-style: preserve-3d;
-    }
-
-    .card-front {
-        overflow: hidden;
-        background-color: aqua;
-    }
-    .img-main {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .card-back {
-        transform: rotateY(180deg);
-        overflow-y: auto;
-        background-color: aqua;
-    }
-
-    .card-front, .card-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        -webkit-backface-visibility: hidden; /* Safari */
-        backface-visibility: hidden;
-    }
-
-    .card-container:hover .card-inner {
-        transform: rotateY(180deg);
-    }
 </style>

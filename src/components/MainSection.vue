@@ -5,7 +5,7 @@
             <div class="flex wrap">
                 <div class="card" v-for="(movie, movieIndex) in linkedMoviesList" :key="movieIndex">
 
-                    <SingleCard :linkedCard="movie" />
+                    <SingleMovieCard :linkedCard="movie" />
 
                 </div>
             </div>
@@ -16,24 +16,39 @@
             <div class="flex wrap">
                 <div class="card" v-for="(serie, serieIndex) in linkedSeriesList" :key="serieIndex">
 
-                    <SingleCard :linkedCard="serie" />
+                    <SingleSerieCard :linkedCard="serie" />
 
                 </div>
+            </div>
+        </section>
+
+        <section class="empty-search" v-show="linkedSearchInput == ''">
+            <div>
+                Inizia a cercare qualcosa
+            </div>
+        </section>
+
+        <section class="empty-search" v-show="linkedSearchInput !== '' && linkedMoviesList.length == 0 && linkedSeriesList.length == 0">
+            <div>
+                Nessun risultato trovato
             </div>
         </section>
     </main>
 </template>
 
 <script>
-import SingleCard from '@/components/SingleCard.vue'
+import SingleMovieCard from '@/components/SingleMovieCard.vue'
+import SingleSerieCard from '@/components/SingleSerieCard.vue'
 
 
 export default {
     name: 'MainSection',
     components: {
-        SingleCard
+        SingleMovieCard,
+        SingleSerieCard
     },
     props: {
+        linkedSearchInput: String,
         linkedMoviesList: Array,
         linkedSeriesList: Array
     }
@@ -54,7 +69,15 @@ export default {
 
     .card {
         width: calc(100% / 5);
-        aspect-ratio: 1 / 1.2;
+        aspect-ratio: 1 / 1.5;
         padding: 15px;
+    }
+
+    .empty-search {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        color: #ffffff;
+        text-align: center;
     }
 </style>

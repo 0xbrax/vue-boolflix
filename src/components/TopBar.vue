@@ -30,6 +30,7 @@ export default {
             height: 100%;
         }
     }
+
     h1 {
         font-size: 40px;
         text-transform: uppercase;
