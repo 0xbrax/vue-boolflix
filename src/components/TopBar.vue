@@ -1,7 +1,10 @@
 <template>
     <nav>
         <div class="container flex just-sp-bw align-ctr">
-            <h1>Boolflix</h1>
+            <div class="flex align-ctr">
+                <a href="#"><h1>Boolflix</h1></a>
+                <img :src="require('@/assets/img/popcorn-icon.png')" alt="BoolFlix">
+            </div>
 
             <div>
                 <input type="text" placeholder="Ricerca film o serie" v-model="searchInput" @keyup.enter="$emit('searchInput', searchInput)">
@@ -35,6 +38,11 @@ export default {
         font-size: 40px;
         text-transform: uppercase;
         color: #e50914;
+    }
+
+    img {
+        height: 40px;
+        margin-left: 5px;
     }
 
     input {

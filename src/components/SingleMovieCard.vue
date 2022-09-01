@@ -6,23 +6,31 @@
             </div>
 
             <div class="card-back flex col align-ctr">
-                <h3>{{linkedCard.title}}</h3>
-                <div>{{linkedCard.original_title}}</div>
-                <img class="lang-flag" :src="langFlagEndpoint + checkLangFlag(linkedCard.original_language)" :alt="linkedCard.original_language">
+                <h4>{{linkedCard.title}}</h4>
+                <div class="card-subtit mt-5"><span class="txt-bold">Titolo originale:</span> {{linkedCard.original_title}}</div>
+                <img class="lang-flag mt-5" :src="langFlagEndpoint + checkLangFlag(linkedCard.original_language)" :alt="linkedCard.original_language">
 
-                <div>
+                <div class="mt-5">
                     <i v-for="n in 5" :key="n" class="fa-star" :class="n > getRank(linkedCard.vote_average) ? 'fa-regular' : 'fa-solid'"></i>
                 </div>
 
-                <div v-for="(moviesCast, moviesCastListIndex) in linkedMoviesCastList" :key="moviesCastListIndex">
-                    {{moviesCast.name}}
+                <div class="card-cast mt-5">
+                    <span class="txt-bold">Cast:</span>
+                    <span v-for="(moviesCast, moviesCastListIndex) in linkedMoviesCastList" :key="moviesCastListIndex">
+                        <span v-if="moviesCastListIndex < (linkedMoviesCastList.length - 1)"> {{moviesCast.name}},</span>
+                        <span v-else> {{moviesCast.name}}</span>
+                    </span>
                 </div>
 
-                <div v-for="(moviesGenre) in linkedMoviesGenreList" :key="moviesGenre.id">
-                    {{moviesGenre.name}}
+                <div class="card-genre mt-5">
+                    <span class="txt-bold">Genere:</span>
+                    <span v-for="(moviesGenre, moviesGenreListIndex) in linkedMoviesGenreList" :key="moviesGenre.id">
+                        <span v-if="moviesGenreListIndex < (linkedMoviesGenreList.length - 1)"> {{moviesGenre.name}},</span>
+                        <span v-else> {{moviesGenre.name}}</span>
+                    </span>
                 </div>
 
-                <div class="card-overview">{{linkedCard.overview}}</div>
+                <div class="card-overview mt-5"><span class="txt-bold">Trama:</span> {{linkedCard.overview}}</div>
             </div>
         </div>
     </div>

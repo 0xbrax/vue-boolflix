@@ -2,7 +2,7 @@
     <main>
         <section class="container" v-if="linkedMoviesList.length !== 0">
             <h2>Film</h2>
-            <div class="flex wrap">
+            <div class="flex wrap mt-15">
                 <div class="card" v-for="(movie, movieIndex) in linkedMoviesList" :key="movieIndex">
 
                     <SingleMovieCard :linkedCard="movie" :linkedMoviesCastList="linkedMoviesCastList[movieIndex]" :linkedMoviesGenreList="linkedMoviesGenreList[movieIndex]" />
@@ -10,14 +10,16 @@
                 </div>
             </div>
 
-            <div class="page-container">
-                <span class="page" :class="page == moviesPageActive?'active':''" v-for="page in linkedMoviesPage" :key="page" @click="$emit('moviesPageSelected', page)">{{page}}</span>
+            <div class="page-container flex just-ctr mt-15">
+                <div class="page-wrapper flex">
+                    <span class="page" :class="page == moviesPageActive?'active':''" v-for="page in linkedMoviesPage" :key="page" @click="$emit('moviesPageSelected', page)">{{page}}</span>
+                </div>
             </div>
         </section>
 
-        <section class="container" v-if="linkedSeriesList.length !== 0">
+        <section class="container mt-30" v-if="linkedSeriesList.length !== 0">
             <h2>Serie TV</h2>
-            <div class="flex wrap">
+            <div class="flex wrap mt-15">
                 <div class="card" v-for="(serie, serieIndex) in linkedSeriesList" :key="serieIndex">
 
                     <SingleSerieCard :linkedCard="serie" :linkedSeriesCastList="linkedSeriesCastList[serieIndex]" :linkedSeriesGenreList="linkedSeriesGenreList[serieIndex]" />
@@ -25,8 +27,10 @@
                 </div>
             </div>
 
-            <div class="page-container">
-                <span class="page" :class="page == seriesPageActive?'active':''" v-for="page in linkedSeriesPage" :key="page" @click="$emit('seriesPageSelected', page)">{{page}}</span>
+            <div class="page-container flex just-ctr mt-15">
+                <div class="page-wrapper flex">
+                    <span class="page" :class="page == seriesPageActive?'active':''" v-for="page in linkedSeriesPage" :key="page" @click="$emit('seriesPageSelected', page)">{{page}}</span>
+                </div>
             </div>
         </section>
 
@@ -104,11 +108,17 @@ export default {
     }
 
     .page-container {
-        text-align: center;
+        width: 100%;
+
+        .page-wrapper {
+            max-width: 200px;
+            overflow-x: auto;
+        }
 
         .page {
             display: inline-block;
-            padding: 10px;
+            text-align: center;
+            padding: 10px 15px;
             background-color: #000000;
             border: 2px solid #ffffff;
 

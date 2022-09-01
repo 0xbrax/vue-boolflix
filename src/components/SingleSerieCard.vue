@@ -2,27 +2,35 @@
     <div class="card-container">
         <div class="card-inner">
             <div class="card-front">
-                <img class="img-main" :src="imagePath + linkedCard.poster_path" :alt="linkedCard.name">
+                <img class="img-main" :src="imagePath + linkedCard.poster_path" :alt="linkedCard.title">
             </div>
 
             <div class="card-back flex col align-ctr">
-                <h3>{{linkedCard.name}}</h3>
-                <div>{{linkedCard.original_name}}</div>
-                <img class="lang-flag" :src="langFlagEndpoint + checkLangFlag(linkedCard.original_language)" :alt="linkedCard.original_language">
+                <h4>{{linkedCard.name}}</h4>
+                <div class="card-subtit mt-5"><span class="txt-bold">Titolo originale:</span> {{linkedCard.original_name}}</div>
+                <img class="lang-flag mt-5" :src="langFlagEndpoint + checkLangFlag(linkedCard.original_language)" :alt="linkedCard.original_language">
 
-                <div>
+                <div class="mt-5">
                     <i v-for="n in 5" :key="n" class="fa-star" :class="n > getRank(linkedCard.vote_average) ? 'fa-regular' : 'fa-solid'"></i>
                 </div>
 
-                <div v-for="(seriesCast, seriesCastListIndex) in linkedSeriesCastList" :key="seriesCastListIndex">
-                    {{seriesCast.name}}
+                <div class="card-cast mt-5">
+                    <span class="txt-bold">Cast:</span>
+                    <span v-for="(seriesCast, seriesCastListIndex) in linkedSeriesCastList" :key="seriesCastListIndex">
+                        <span v-if="seriesCastListIndex < (linkedSeriesCastList.length - 1)"> {{seriesCast.name}},</span>
+                        <span v-else> {{seriesCast.name}}</span>
+                    </span>
                 </div>
 
-                <div v-for="(seriesGenre) in linkedSeriesGenreList" :key="seriesGenre.id">
-                    {{seriesGenre.name}}
+                <div class="card-genre mt-5">
+                    <span class="txt-bold">Genere:</span>
+                    <span v-for="(seriesGenre, seriesGenreListIndex) in linkedSeriesGenreList" :key="seriesGenre.id">
+                        <span v-if="seriesGenreListIndex < (linkedSeriesGenreList.length - 1)"> {{seriesGenre.name}},</span>
+                        <span v-else> {{seriesGenre.name}}</span>
+                    </span>
                 </div>
 
-                <div class="card-overview">{{linkedCard.overview}}</div>
+                <div class="card-overview mt-5"><span class="txt-bold">Trama:</span> {{linkedCard.overview}}</div>
             </div>
         </div>
     </div>
