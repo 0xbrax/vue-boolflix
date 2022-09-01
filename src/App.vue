@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TopBar @searchInput="getSearchInput" />
-    <MainSection :linkedSearchInput="linkedSearchInput" :linkedMoviesList="moviesList" :linkedMoviesCastList="moviesCastList" :linkedMoviesGenreList="moviesGenreList" :linkedSeriesList="seriesList" :linkedSeriesCastList="seriesCastList" :linkedSeriesGenreList="seriesGenreList" />
+    <MainSection :linkedSearchInput="linkedSearchInput" :linkedMoviesPage="moviesPage" @pageSelected="getPageSelected" :linkedMoviesList="moviesList" :linkedMoviesCastList="moviesCastList" :linkedMoviesGenreList="moviesGenreList" :linkedSeriesList="seriesList" :linkedSeriesCastList="seriesCastList" :linkedSeriesGenreList="seriesGenreList" />
   </div>
 </template>
 
@@ -27,6 +27,7 @@ export default {
       seriesCastListRequest: 'tv/',
       languageRequest: 'it-IT',
       linkedSearchInput: '',
+      moviesPage: [],
       moviesList: [],
       moviesCastList: [],
       moviesGenreList: [],
@@ -39,17 +40,37 @@ export default {
     getSearchInput(givenSearchInput) {
       this.linkedSearchInput = givenSearchInput;
       if (!this.linkedSearchInput == '') {
-        this.getEndpointRequest(this.moviesListRequest, 'moviesList', this.moviesCastListRequest, 'moviesCastList', 'moviesGenreList');
-        this.getEndpointRequest(this.seriesListRequest, 'seriesList', this.seriesCastListRequest, 'seriesCastList', 'seriesGenreList');
+        this.getEndpointRequest(this.moviesListRequest, 'moviesList', this.moviesCastListRequest, 'moviesCastList', 'moviesGenreList', 'moviesPage');
+        //this.getEndpointRequest(this.seriesListRequest, 'seriesList', this.seriesCastListRequest, 'seriesCastList', 'seriesGenreList');
       } else {
         this.moviesList = [];
         this.seriesList = [];
       }
     },
-    getEndpointRequest(listRequest, arrayOut, castListRequest, castArrayOut, genreArrayOut) {
+    getPageSelected(givenPage) {
+      console.log(givenPage)
+
+      axios.get(`${this.endpoint}${this.moviesListRequest}?api_key=${this.privateAPIkey}&query=${this.linkedSearchInput}&language=${this.languageRequest}&page=${givenPage}`)
+      .then(response => {
+
+        this.moviesList = response.data.results;
+
+        //this.checkImagePath(this[arrayOut]);
+        //this.getCastRequest(this[arrayOut], castListRequest, castArrayOut);
+        //this.getGenreRequest(this[arrayOut], castListRequest, genreArrayOut);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    },
+    getEndpointRequest(listRequest, arrayOut, castListRequest, castArrayOut, genreArrayOut, arrayPage) {
       axios.get(`${this.endpoint}${listRequest}?api_key=${this.privateAPIkey}&query=${this.linkedSearchInput}&language=${this.languageRequest}`)
       .then(response => {
+
         this[arrayOut] = response.data.results;
+
+        this.getSearchByPage(response.data.total_pages, arrayPage);
+
         this.checkImagePath(this[arrayOut]);
         this.getCastRequest(this[arrayOut], castListRequest, castArrayOut);
         this.getGenreRequest(this[arrayOut], castListRequest, genreArrayOut);
@@ -58,6 +79,20 @@ export default {
         console.log(error);
       });
     },
+
+    getSearchByPage(page, arrayPage) {
+      /////TEST
+
+      console.log(page)
+
+      this[arrayPage] = [];
+      for (let i = 1; i <= page; i++) {
+        this[arrayPage].push(i);
+      }
+
+      console.log(this[arrayPage])
+    },
+
     checkImagePath(arrayToCheck) {
       for (let i = 0; i < arrayToCheck.length; i++) {
         if (arrayToCheck[i].poster_path == null) {

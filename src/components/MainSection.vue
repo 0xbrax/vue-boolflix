@@ -9,6 +9,10 @@
 
                 </div>
             </div>
+
+            <div class="page-container">
+                <span class="page" v-for="page in linkedMoviesPage" :key="page" @click="$emit('pageSelected', page)">{{page}}</span>
+            </div>
         </section>
 
         <section class="container" v-if="linkedSeriesList.length !== 0">
@@ -49,6 +53,7 @@ export default {
     },
     props: {
         linkedSearchInput: String,
+        linkedMoviesPage: Array,
         linkedMoviesList: Array,
         linkedMoviesCastList: Array,
         linkedMoviesGenreList: Array,
@@ -65,9 +70,6 @@ export default {
         overflow-y: auto;
         background-color: #434343;
         padding: 30px 0;
-    }
-
-    h2 {
         color: #ffffff;
     }
 
@@ -83,5 +85,16 @@ export default {
         height: 100%;
         color: #ffffff;
         text-align: center;
+    }
+
+    .page-container {
+        text-align: center;
+
+        .page {
+            display: inline-block;
+            padding: 10px;
+            background-color: black;
+            border: 1px solid white;
+        }
     }
 </style>
