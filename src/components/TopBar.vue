@@ -4,7 +4,7 @@
             <h1>Boolflix</h1>
 
             <div>
-                <input type="text" placeholder="Ricerca film" v-model="searchInput" @keyup.enter="$emit('searchInput', searchInput)">
+                <input type="text" placeholder="Ricerca film o serie" v-model="searchInput" @keyup.enter="$emit('searchInput', searchInput)">
                 <button @click="$emit('searchInput', searchInput)">Cerca</button>
             </div>
         </div>
@@ -35,5 +35,30 @@ export default {
         font-size: 40px;
         text-transform: uppercase;
         color: #e50914;
+    }
+
+    input {
+        width: 200px;
+        padding: 5px;
+        border: 2px solid #e50914;
+        border-radius: 5px;
+        margin-right: 25px;
+
+        &:focus {
+            outline: 2px solid white;
+            outline-offset: 1px;
+        }
+    }
+
+    button {
+        background-color: #e50914;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: 2px solid #ffffff;
+        border-radius: 5px;
+
+        &:hover {
+            background-color: #ba0009;
+        }
     }
 </style>
