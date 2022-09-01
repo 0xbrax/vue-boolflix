@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TopBar @searchInput="getSearchInput" />
-    <MainSection :linkedSearchInput="linkedSearchInput" :linkedMoviesList="moviesList" :linkedMoviesCastList="moviesCastList" :linkedSeriesList="seriesList" :linkedSeriesCastList="seriesCastList" />
+    <MainSection :linkedSearchInput="linkedSearchInput" :linkedMoviesList="moviesList" :linkedMoviesCastList="moviesCastList" :linkedMoviesGenreList="moviesGenreList" :linkedSeriesList="seriesList" :linkedSeriesCastList="seriesCastList" :linkedSeriesGenreList="seriesGenreList" />
   </div>
 </template>
 
@@ -29,28 +29,34 @@ export default {
       linkedSearchInput: '',
       moviesList: [],
       moviesCastList: [],
+      moviesGenreList: [],
       seriesList: [],
-      seriesCastList: []
+      seriesCastList: [],
+      seriesGenreList:[]
     }
   },
   methods: {
     getSearchInput(givenSearchInput) {
       this.linkedSearchInput = givenSearchInput;
       if (!this.linkedSearchInput == '') {
-        this.getEndpointRequest(this.moviesListRequest, 'moviesList', this.moviesCastListRequest, 'moviesCastList');
-        this.getEndpointRequest(this.seriesListRequest, 'seriesList', this.seriesCastListRequest, 'seriesCastList');
+        this.getEndpointRequest(this.moviesListRequest, 'moviesList', this.moviesCastListRequest, 'moviesCastList', 'moviesGenreList');
+        this.getEndpointRequest(this.seriesListRequest, 'seriesList', this.seriesCastListRequest, 'seriesCastList', 'seriesGenreList');
+
+        console.log(this.moviesGenreList)
+        console.log(this.seriesGenreList)
       } else {
         this.moviesList = [];
         this.seriesList = [];
       }
     },
-    getEndpointRequest(listRequest, arrayOut, castListRequest, castArrayOut) {
+    getEndpointRequest(listRequest, arrayOut, castListRequest, castArrayOut, genreArrayOut) {
       axios.get(`${this.endpoint}${listRequest}?api_key=${this.privateAPIkey}&query=${this.linkedSearchInput}&language=${this.languageRequest}`)
       .then(response => {
         //console.log(response);
         this[arrayOut] = response.data.results;
         this.checkImagePath(this[arrayOut]);
         this.getCastRequest(this[arrayOut], castListRequest, castArrayOut);
+        this.getGenreRequest(this[arrayOut], castListRequest, genreArrayOut);
       })
       .catch(error => {
         console.log(error);
@@ -68,6 +74,17 @@ export default {
         axios.get(`${this.endpoint}${urlRequest}${arrayIn[i].id}/credits?api_key=${this.privateAPIkey}&${this.languageRequest}`)
         .then(response => {
             this[arrayOut].push(response.data.cast.splice(0, 5));
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
+    },
+    getGenreRequest(arrayIn, urlRequest, arrayOut) {
+      for (let i = 0; i < arrayIn.length; i++) {
+        axios.get(`${this.endpoint}${urlRequest}${arrayIn[i].id}?api_key=${this.privateAPIkey}&${this.languageRequest}`)
+        .then(response => {
+            this[arrayOut].push(response.data.genres.splice(0, 2));
         })
         .catch(error => {
           console.log(error);

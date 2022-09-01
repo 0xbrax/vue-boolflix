@@ -18,6 +18,10 @@
                     {{moviesCast.name}}
                 </div>
 
+                <div v-for="(moviesGenre) in linkedMoviesGenreList" :key="moviesGenre.id">
+                    {{moviesGenre.name}}
+                </div>
+
                 <div class="card-overview">{{linkedCard.overview}}</div>
             </div>
         </div>
@@ -29,7 +33,8 @@ export default {
     name: 'SingleMovieCard',
     props: {
         linkedCard: Object,
-        linkedMoviesCastList: Array
+        linkedMoviesCastList: Array,
+        linkedMoviesGenreList: Array
     },
     data() {
         return {
@@ -48,6 +53,10 @@ export default {
                 return checkLang = 'jp';
             } else if (checkLang == 'ko') {
                 return checkLang = 'kr';
+            } else if (checkLang == 'da') {
+                return checkLang = 'dk';
+            } else if (checkLang == 'el') {
+                return checkLang = 'gr';
             } else {
                 return checkLang
             }
