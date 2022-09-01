@@ -58,7 +58,12 @@ export default {
         border-radius: 5px;
 
         &:hover {
-            background-color: #ba0009;
+            cursor: pointer;
+            background-color: #eb4b53;
+        }
+
+        &:active {
+            background-color: #e50914;
         }
     }
 </style>

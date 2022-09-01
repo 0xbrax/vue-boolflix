@@ -11,7 +11,7 @@
             </div>
 
             <div class="page-container">
-                <span class="page" v-for="page in linkedMoviesPage" :key="page" @click="$emit('pageSelected', page)">{{page}}</span>
+                <span class="page" :class="page == moviesPageActive?'active':''" v-for="page in linkedMoviesPage" :key="page" @click="$emit('moviesPageSelected', page)">{{page}}</span>
             </div>
         </section>
 
@@ -23,6 +23,10 @@
                     <SingleSerieCard :linkedCard="serie" :linkedSeriesCastList="linkedSeriesCastList[serieIndex]" :linkedSeriesGenreList="linkedSeriesGenreList[serieIndex]" />
 
                 </div>
+            </div>
+
+            <div class="page-container">
+                <span class="page" :class="page == seriesPageActive?'active':''" v-for="page in linkedSeriesPage" :key="page" @click="$emit('seriesPageSelected', page)">{{page}}</span>
             </div>
         </section>
 
@@ -54,9 +58,12 @@ export default {
     props: {
         linkedSearchInput: String,
         linkedMoviesPage: Array,
+        moviesPageActive: Number,
         linkedMoviesList: Array,
         linkedMoviesCastList: Array,
         linkedMoviesGenreList: Array,
+        linkedSeriesPage: Array,
+        seriesPageActive: Number,
         linkedSeriesList: Array,
         linkedSeriesCastList: Array,
         linkedSeriesGenreList: Array
@@ -73,10 +80,19 @@ export default {
         color: #ffffff;
     }
 
+    h2 {
+        font-size: 30px;
+    }
+
     .card {
         width: calc(100% / 5);
         aspect-ratio: 1 / 1.5;
         padding: 15px;
+        font-size: 20px;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
     }
 
     .empty-search {
@@ -93,8 +109,17 @@ export default {
         .page {
             display: inline-block;
             padding: 10px;
-            background-color: black;
-            border: 1px solid white;
+            background-color: #000000;
+            border: 2px solid #ffffff;
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgba(255, 255, 255, 0.2);
+            }
         }
+
+        .active {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
     }
 </style>
