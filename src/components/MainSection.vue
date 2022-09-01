@@ -22,13 +22,13 @@
             </div>
         </section>
 
-        <section class="empty-search" v-show="linkedSearchInput == ''">
+        <section class="empty-search" v-if="linkedSearchInput == ''">
             <div>
                 Inizia a cercare qualcosa
             </div>
         </section>
 
-        <section class="empty-search" v-show="linkedSearchInput !== '' && linkedMoviesList.length == 0 && linkedSeriesList.length == 0">
+        <section class="empty-search" v-if="linkedSearchInput !== '' && linkedMoviesList.length == 0 && linkedSeriesList.length == 0">
             <div>
                 Nessun risultato trovato
             </div>
