@@ -56,16 +56,15 @@ export default {
         this.seriesList = [];
       }
     },
-    getEndpointRequest(listRequest, arrayOut, castListRequest, castArrayOut, genreArrayOut, arrayPage) {
+    getEndpointRequest(listRequest, arrayOut, specListRequest, castArrayOut, genreArrayOut, arrayPage) {
       axios.get(`${this.endpoint}${listRequest}?api_key=${this.privateAPIkey}&query=${this.linkedSearchInput}&language=${this.languageRequest}`)
       .then(response => {
         this[arrayOut] = response.data.results;
 
         this.getSearchByPage(response.data.total_pages, arrayPage);
 
-        this.checkImagePath(this[arrayOut]);
-        this.getCastRequest(this[arrayOut], castListRequest, castArrayOut);
-        this.getGenreRequest(this[arrayOut], castListRequest, genreArrayOut);
+        this.getCastRequest(this[arrayOut], specListRequest, castArrayOut);
+        this.getGenreRequest(this[arrayOut], specListRequest, genreArrayOut);
       })
       .catch(error => {
         console.log(error);
@@ -81,7 +80,6 @@ export default {
       axios.get(`${this.endpoint}${this.moviesListRequest}?api_key=${this.privateAPIkey}&query=${this.linkedSearchInput}&language=${this.languageRequest}&page=${givenPage}`)
       .then(response => {
         this.moviesList = response.data.results;
-        this.checkImagePath(this.moviesList);
         this.getCastRequest(this.moviesList, this.moviesSpecRequest, 'moviesCastList');
         this.getGenreRequest(this.moviesList, this.moviesSpecRequest, 'moviesGenreList');
         this.moviesPageActive = givenPage;
@@ -94,7 +92,6 @@ export default {
       axios.get(`${this.endpoint}${this.seriesListRequest}?api_key=${this.privateAPIkey}&query=${this.linkedSearchInput}&language=${this.languageRequest}&page=${givenPage}`)
       .then(response => {
         this.seriesList = response.data.results;
-        this.checkImagePath(this.seriesList);
         this.getCastRequest(this.seriesList, this.seriesSpecRequest, 'seriesCastList');
         this.getGenreRequest(this.seriesList, this.seriesSpecRequest, 'seriesGenreList');
         this.seriesPageActive = givenPage;
@@ -102,13 +99,6 @@ export default {
       .catch(error => {
         console.log(error);
       });
-    },
-    checkImagePath(arrayToCheck) {
-      for (let i = 0; i < arrayToCheck.length; i++) {
-        if (arrayToCheck[i].poster_path == null) {
-          arrayToCheck.splice(i, 1)
-        }
-      }
     },
     getCastRequest(arrayIn, urlRequest, arrayOut) {
       this[arrayOut] = [];

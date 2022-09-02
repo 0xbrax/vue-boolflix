@@ -5,7 +5,7 @@
             <div class="flex wrap mt-15">
                 <div class="card" v-for="(movie, movieIndex) in linkedMoviesList" :key="movieIndex">
 
-                    <SingleMovieCard :linkedCard="movie" :linkedMoviesCastList="linkedMoviesCastList[movieIndex]" :linkedMoviesGenreList="linkedMoviesGenreList[movieIndex]" />
+                    <SingleCard :linkedCard="movie" :linkedCastList="linkedMoviesCastList[movieIndex]" :linkedGenreList="linkedMoviesGenreList[movieIndex]" />
 
                 </div>
             </div>
@@ -22,7 +22,7 @@
             <div class="flex wrap mt-15">
                 <div class="card" v-for="(serie, serieIndex) in linkedSeriesList" :key="serieIndex">
 
-                    <SingleSerieCard :linkedCard="serie" :linkedSeriesCastList="linkedSeriesCastList[serieIndex]" :linkedSeriesGenreList="linkedSeriesGenreList[serieIndex]" />
+                    <SingleCard :linkedCard="serie" :linkedCastList="linkedSeriesCastList[serieIndex]" :linkedGenreList="linkedSeriesGenreList[serieIndex]" />
 
                 </div>
             </div>
@@ -49,15 +49,13 @@
 </template>
 
 <script>
-import SingleMovieCard from '@/components/SingleMovieCard.vue'
-import SingleSerieCard from '@/components/SingleSerieCard.vue'
+import SingleCard from '@/components/SingleCard.vue'
 
 
 export default {
     name: 'MainSection',
     components: {
-        SingleMovieCard,
-        SingleSerieCard
+        SingleCard
     },
     props: {
         linkedSearchInput: String,
